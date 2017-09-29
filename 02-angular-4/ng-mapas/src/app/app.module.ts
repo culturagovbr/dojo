@@ -1,19 +1,21 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
+import { HttpModule }    from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { MapasComponent } from './mapas/mapas.component';
-import { MapasService } from './mapas.service';
+import { MapasService } from './mapas/mapas.service';
+import { MapasDirective } from './mapas.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MapasComponent
+    MapasComponent,
+    MapasDirective
   ],
   imports: [  
     BrowserModule,
-    HttpClientModule
+    HttpModule
   ],
   providers: [MapasService],
   bootstrap: [AppComponent]
