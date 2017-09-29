@@ -14,7 +14,7 @@
 - Oreon
 - Ramon
 - Rafael
-- Luiz
+- [Luiz](https://github.com/luizfpinheiro)
 - Moisẽs
 - Ruy
 - Aval
