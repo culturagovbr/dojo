@@ -10,7 +10,7 @@
 
 ## Integrantes
 - Matheus Pimenta
-- Vinícius
+- [Vinícius](https://github.com/vinnyfs89)
 - Oreon
 - Ramon
 - Rafael
