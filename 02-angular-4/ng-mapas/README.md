@@ -24,4 +24,4 @@
 - [Wouerner](https://github.com/wouerner/)
 - Matheus Batista
 - Ricardo
-- Leo
+- [Leo](https://github.com/volthier/)
