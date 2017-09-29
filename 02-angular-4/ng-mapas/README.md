@@ -20,7 +20,7 @@
 - Aval
 - Marcos
 - Cleber
-- Chris
+- [Chris](https://github.com/chris-redfield)
 - [Wouerner](https://github.com/wouerner/)
 - Matheus Batista
 - Ricardo
