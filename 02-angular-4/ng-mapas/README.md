@@ -21,7 +21,7 @@
 - Marcos
 - Cleber
 - Chris
-- Wouerner
+- [Wouerner](https://github.com/wouerner/)
 - Matheus Batista
 - Ricardo
 - Leo
