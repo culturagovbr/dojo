@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="assets/favicons/android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="assets/favicons/android-chrome-512x512.png" sizes="512x512">
+    <link rel="manifest" href="assets/favicons/manifest.json">
+    <!--<link rel="shortcut icon" href="assets/favicons/favicon.ico">-->
+    <meta name="msapplication-config" content="assets/favicons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <meta charset="utf-8">
+  <title>Pwa</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+  <app-root></app-root>
+  <script>
+    if (navigator.serviceWorker) {
+      navigator.serviceWorker.register('service-worker.js').then(() => {
+        console.log('Service worker installed')
+      }, err => {
+        console.error('Service worker error:', err);
+      });
+    }
+
+    window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+    window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
+    window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
+
+    const dbName = "users";
+
+    var db;
+    var request = window.indexedDB.open(dbName, 3);
+
+    request.onerror = function(event) {
+      console.log(event);
+      alert("Você não habilitou minha web app para usar IndexedDB?!");
+    };
+    request.onsuccess = function(event) {
+      db = request.result;
+    };
+
+    // Este evento é implementado somente em navegadores mais recentes
+    request.onupgradeneeded = function(event) {
+      var db = event.target.result;
+
+      // Cria um objectStore para conter a informação sobre nossos clientes. Nós vamos
+      // usar "ssn" como key path porque sabemos que é único;
+      var objectStore = db.createObjectStore(dbName, { keyPath: "name" });
+
+      // Cria um índice para buscar clientes pelo nome. Podemos ter nomes
+      // duplicados, então não podemos usar como índice único.
+      objectStore.createIndex("name", "name", { unique: true });
+
+      // Cria um índice para buscar clientes por img. Queremos ter certeza
+      // que não teremos 2 clientes com o mesmo e-mail;
+      objectStore.createIndex("img", "img", { unique: false });
+
+      // Usando transação oncomplete para afirmar que a criação do objectStore
+      // é terminada antes de adicionar algum dado nele.
+      objectStore.transaction.oncomplete = function(event) {
+        // Armazenando valores no novo objectStore.
+        users = [
+          {name: 'Ryu', img: {url: 'https://img00.deviantart.net/b6bd/i/2016/066/5/1/sfv__ryu_by_anubisdhl-d9ub64x.jpg'}},
+          {name: 'Ken', img: {url: 'https://vignette.wikia.nocookie.net/streetfighter/images/b/b4/Kenrender.png/revision/latest/scale-to-width-down/350?cb=20170728171332'}},
+          {name: 'Chun-Li', img: {url: 'https://i.kinja-img.com/gawker-media/image/upload/s--b_HbiJxa--/c_scale,fl_progressive,q_80,w_800/eec1fnvluhc0b5lugorm.jpg'}},
+        ];
+
+        var clientesObjectStore = db.transaction(dbName, "readwrite").objectStore(dbName);
+        for (var i in users) {
+          console.info('INSERT');
+          clientesObjectStore.add(users[i]);
+        }
+
+      }
+    };
+  </script>
+</body>
+</html>
+
