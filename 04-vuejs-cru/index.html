@@ -1,0 +1,209 @@
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vuex"></script>
+  </head>
+  <body>
+
+    <div id="app">
+      {{ message }}
+    </div>
+
+    <div id="app-2">
+      <span v-bind:title="message">
+        Hover your mouse over me for a few seconds
+        to see my dynamically bound title!
+      </span>
+    </div>
+
+
+    <div id="app-3">
+    <p v-if="seen">Agora você me viu</p>
+    </div>
+    <div id="app-4">
+        <ol>
+            <li v-for="todo in todos">
+            {{ todo.text }}
+            </li>
+        </ol>
+    </div>
+    <div id="app-5">
+        <p>{{ message }}</p>
+        <button v-on:click="reverseMessage">Reverse Message</button>
+    </div>
+    <div id="app-6">
+        
+        <input v-model="message">
+        <p>{{ message }}</p>
+    </div>
+    
+    <div id="app-7">
+        <ol>
+            <!--
+            Now we provide each todo-item with the todo object
+            it's representing, so that its content can be dynamic.
+            We also need to provide each component with a "key",
+            which will be explained later.
+            -->
+            <todo-item
+                v-for="item in groceryList"
+                v-bind:todo="item"
+                v-bind:key="item.id">
+            </todo-item>
+        </ol>
+    </div>
+    
+    <div id="app-7_1">
+        <p> app 7 x 1 </p>
+        <ol>
+            <!--
+            Now we provide each todo-item with the todo object
+            it's representing, so that its content can be dynamic.
+            We also need to provide each component with a "key",
+            which will be explained later.
+            -->
+            <todo-item
+                v-for="item in groceryList"
+                v-bind:todo="item"
+                v-bind:key="item.id">
+            </todo-item>
+        </ol>
+    </div>
+    
+    
+    
+    <div id="app-todo-list">
+        <p>Todo list</p>
+        <ul>
+            <todo-directive
+                v-for="todo in todos"
+                v-bind:description="todo.description"
+                v-bind:key="todo.id"
+                v-bind:id="todo.id"
+                v-on:eventoremovertodo="removerTodo"
+                >
+            </todo-directive>
+        </ul>
+        <input v-model="todoItem" @keyup.enter="todoInserir"/>
+        <button v-on:click="todoInserir">Inserir</button>
+        {{todos}}
+    </div>
+    
+    
+    
+    
+    
+    
+    <script>
+      var app = new Vue({
+        el: '#app',
+        data: {
+          message: 'Hello Vue!'
+        }
+      })
+
+      var app2 = new Vue({
+        el: '#app-2',
+        data: {
+          message: 'You loaded this page on ' + new Date().toLocaleString()
+        }
+      })
+      
+        var app3 = new Vue({
+        el: '#app-3',
+        data: {
+            seen: true
+        }
+        })
+        var app4 = new Vue({
+        el: '#app-4',
+        data: {
+            todos: [
+            { text: 'Aprender JavaScript' },
+            { text: 'Aprender Vue' },
+            { text: 'Criar algo incrível' }
+            ]
+        }
+        })
+        var app5 = new Vue({
+        el: '#app-5',
+            data: {
+            message: 'Hello Vue.js!'
+        },
+        methods: {
+        reverseMessage: function () {
+        this.message = this.message.split('').reverse().join('')
+            }
+            }
+        })
+        var app6 = new Vue({
+        el: '#app-6',
+        data: {
+            message: 'Hello Vue!'
+        }
+        })
+        
+        Vue.component('todo-item', {
+            props: ['todo'],
+            template: '<li>{{ todo.text }}</li>'
+        })
+        
+        Vue.component('todo-directive', {
+            props: ['id','description'],
+            template: '<li>{{id}} - {{description}} <button @click="removerTodo(id)">X</button></li>',
+            methods: {
+                removerTodo: function(id) {
+                    this.$emit("eventoremovertodo", id);
+                }
+            }
+        })
+
+        var app7 = new Vue({
+            el: '#app-7',
+            data: {
+                groceryList: [
+                { id: 0, text: 'Vegetables' },
+                { id: 1, text: 'Cheese' },
+                { id: 2, text: 'Whatever else humans are supposed to eat' }
+                ]
+            }
+        })
+        
+        var app7_1 = new Vue({
+            el: '#app-7_1',
+            data: {
+                groceryList: [
+                { id: 0, text: 'Vegetables' },
+                { id: 1, text: 'Cheese' },
+                { id: 2, text: 'Whatever else humans are supposed to eat' }
+                ]
+            }
+        })
+        
+        
+        var app8 = new Vue({
+            el: '#app-todo-list',
+            data: {
+                todos: {
+                    0: {id: 0, description: 'Eat something'},
+                    1: {id: 1, description: 'Make Coffee'},
+                    2: {id: 2, description: 'Make some joke about wouener'}
+                },
+                todoItem: ''
+            },
+            methods:{
+                todoInserir: function () {
+                    this.todos.push({id: this.todos.length, description: this.todoItem})
+                    this.todoItem = ''
+                },
+                 removerTodo: function(id) {
+                    console.log(id);
+                    Vue.delete(this.todos, id);
+                }
+            }
+            
+        });
+        
+    </script>
+  </body>
+</html>
