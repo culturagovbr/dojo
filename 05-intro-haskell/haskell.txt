@@ -1,0 +1,59 @@
+# Introdução
+- Functional
+- Smart
+- Pure
+- Lazy
+- Instalando
+- Hello World
+- Read e Print
+
+# Funções
+- Declaração
+- Pattern Matching
+- Guards
+- Where
+- Let...in
+- Case
+
+# Listas
+- Declaração
+- Operações (++, head, tail,)
+- Ranges
+- Compreensão
+- Tuplas
+
+# Programação Funcional
+- Recursão
+- High-order functions
+- Currying
+- Aplicação parcial
+- Map e filter
+- Lambdas
+- Fold
+- Precedência ($)
+- Composição (.)
+
+--Parte 2
+# Tipos e typeclasses
+- Declaração
+- Inferência
+- Variáveis de tipos
+- Constraints
+- Annotations
+- Typeclasses
+- Records
+- Parâmetros
+- Derivação (Eq, Ord, Read, Show, Enum, Bounded)
+- Sinônimos
+- Estruturas de dados recursivas
+- Instâncias
+- Functors
+- Kinds
+
+# Monads
+- Wat
+- Maybe
+- Bind (>>=)
+
+# I/O
+- Funções impuras com Do
